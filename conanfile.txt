@@ -6,3 +6,6 @@ glm/cci.20220420
 [generators]
 CMakeToolchain
 CMakeDeps
+
+[layout]
+cmake_layout
