@@ -1,6 +1,7 @@
 #pragma once
 
 #include "renderer.hpp"
+#include "runtimedata.hpp"
 #include <memory>
 
 #include <glad/gl.h>
@@ -16,11 +17,9 @@ public:
   int loop();
   void interface();
 
-  //GLFW events
-  static void errorEvent(int error, const char * description);
-  static void framBufferSizeEvent(GLFWwindow* window, int width, int height);
-
 private:
   std::unique_ptr<Renderer> m_renderer;
+  std::unique_ptr<RuntimeData> m_state;
+
   GLFWwindow *m_window = nullptr;
 };

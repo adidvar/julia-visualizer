@@ -12,13 +12,17 @@
 constexpr uint window_width = 1280;
 constexpr uint window_height = 720;
 
+void errorEvent(int error, const char * description){
+    std::cerr << "glfw error: " << description;
+}
+
 Window::Window() {
    //GLFW Init
    if(glfwInit() == 0){
        std::cerr << "glfw init error";
        exit(-1);
    }
-   glfwSetErrorCallback(&Window::errorEvent);
+   glfwSetErrorCallback(errorEvent);
 
    // OPENGL context settings1
    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -32,7 +36,7 @@ Window::Window() {
        std::cerr << "glfw window init error";
        exit(-1);
    }
-   glfwSetFramebufferSizeCallback(m_window, Window::framBufferSizeEvent);
+   glfwSetFramebufferSizeCallback(m_window, framBufferSizeEvent);
 
    glfwSetWindowUserPointer(m_window, this);
    glfwMakeContextCurrent(m_window);
@@ -52,14 +56,6 @@ Window::Window() {
 
    ImGui_ImplGlfw_InitForOpenGL(m_window, true);
    ImGui_ImplOpenGL3_Init("#version 150");
-}
-
-void Window::errorEvent(int error, const char * description){
-    std::cerr << "glfw error: " << description;
-}
-
-void Window::framBufferSizeEvent(GLFWwindow* window, int width, int height){
-    glViewport(0,0,width,height);
 }
 
 Window::~Window(){
