@@ -2,6 +2,6 @@
 
 int main()
 {
-    Window window;
-    return window.loop();
+  Window window;
+  return window.loop();
 }

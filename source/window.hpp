@@ -1,12 +1,13 @@
 #pragma once
 
-#include "renderer.hpp"
-#include "runtimedata.hpp"
 #include <memory>
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <imgui.h>
+
+#include "renderer.hpp"
+#include "runtimedata.hpp"
 
 class Window
 {
@@ -21,5 +22,5 @@ private:
   std::unique_ptr<Renderer> m_renderer;
   std::unique_ptr<RuntimeData> m_state;
 
-  GLFWwindow *m_window = nullptr;
+  GLFWwindow* m_window = nullptr;
 };
