@@ -1,6 +1,6 @@
-#include "window.hpp"
+#include "application.hpp"
 
 int main()
 {
-  return Window().loop();
+  return Application().run();
 }

@@ -22,6 +22,7 @@ add_library(
     source/wrappers/shader.cpp
     source/wrappers/renderlist.cpp
     source/window.cpp
+    source/application.cpp
 )
 
 

@@ -7,12 +7,11 @@ const char* ShaderProgram::k_vertex_shader_text_ = R"(
 
     out vec2 Coord;
 
-    uniform mat4 transform;
-
+    uniform mat4 uniform_transform_matrix;
 
     void main()
     {
-        vec4 cord = transform * vec4(aPos, 1.0f);
+        vec4 cord = uniform_transform_matrix * vec4(aPos, 1.0f);
         gl_Position = vec4(aPos, 1.0f);
         Coord = vec2(cord.x,cord.y);
     }
@@ -27,11 +26,11 @@ const char* ShaderProgram::k_fragment_shader_text_ = R"(
 
     in vec2 Coord;
 
-    uniform vec2 delta;
+    uniform vec2 uniform_start_point;
 
     void main()
     {
-        vec2 c = delta;
+        vec2 c = uniform_start_point;
         vec2 p = vec2(Coord.xy);
 
         for(int i = 0 ; i <6 ; i++){

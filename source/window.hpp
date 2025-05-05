@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #include <glad/gl.h>
 
 #include <GLFW/glfw3.h>
@@ -15,14 +13,6 @@ public:
   Window();
   ~Window();
 
-  int loop();
-
-  void interface();
-  void background();
-
-private:
+protected:
   GLFWwindow* window_ = nullptr;
-
-  std::unique_ptr<ShaderProgram> shader_program_ = nullptr;
-  std::unique_ptr<RenderList> render_list_ = nullptr;
 };
