@@ -114,20 +114,23 @@ IncludeBlocks: Regroup
 IncludeCategories:
   # Standard library headers come before anything else
   - Regex: '^<[a-z_]+>'
-    Priority: -1
+    Priority: -2
     SortPriority: 0
     CaseSensitive: false
+  - Regex:           '^<glad/.*>$'
+    Priority:        -1
+    SortPriority:    0
   - Regex: '^<.+\.h(pp)?>'
     Priority: 1
-    SortPriority: 0
+    SortPriority: 1
     CaseSensitive: false
   - Regex: '^<.*'
     Priority: 2
-    SortPriority: 0
+    SortPriority: 2
     CaseSensitive: false
   - Regex: '.*'
     Priority: 3
-    SortPriority: 0
+    SortPriority: 3
     CaseSensitive: false
 IncludeIsMainRegex: ''
 IncludeIsMainSourceRegex: ''
