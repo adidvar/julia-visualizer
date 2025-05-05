@@ -39,6 +39,25 @@ public:
     glBindBuffer(GL_ARRAY_BUFFER, 0);
   }
 
+  RenderList(const RenderList&) = delete;
+  auto operator=(const RenderList&) -> RenderList& = delete;
+
+  RenderList(RenderList&& other) noexcept
+  {
+    std::swap(vertex_array_object_, other.vertex_array_object_);
+    std::swap(point_array_object_, other.point_array_object_);
+    std::swap(index_array_object_, other.index_array_object_);
+  }
+
+  auto operator=(RenderList&& other) noexcept -> RenderList&
+  {
+    std::swap(vertex_array_object_, other.vertex_array_object_);
+    std::swap(point_array_object_, other.point_array_object_);
+    std::swap(index_array_object_, other.index_array_object_);
+
+    return *this;
+  }
+
   ~RenderList()
   {
     glDeleteVertexArrays(1, &vertex_array_object_);
