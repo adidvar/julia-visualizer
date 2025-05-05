@@ -19,5 +19,5 @@ if [ -f conan_cache_save.tgz ]; then
   conan cache restore conan_cache_save.tgz
 fi
 conan remove \* --lru=1M -c
-conan install . -b missing -c tools.system.package_manager:mode=install
+sudo conan install . -b missing -c tools.system.package_manager:mode=install
 conan cache save '*/*:*' --file=conan_cache_save.tgz
