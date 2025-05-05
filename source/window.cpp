@@ -6,8 +6,8 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-constexpr uint window_width = 1280;
-constexpr uint window_height = 720;
+constexpr unsigned window_width = 1280;
+constexpr unsigned window_height = 720;
 
 void errorEvent(int error, const char* description)
 {
