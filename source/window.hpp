@@ -6,9 +6,8 @@
 
 #include <GLFW/glfw3.h>
 #include <imgui.h>
-
-#include "renderer.hpp"
-#include "runtimedata.hpp"
+#include <wrappers/renderlist.hpp>
+#include <wrappers/shader.hpp>
 
 class Window
 {
@@ -17,11 +16,13 @@ public:
   ~Window();
 
   int loop();
+
   void interface();
+  void background();
 
 private:
-  std::unique_ptr<Renderer> m_renderer;
-  std::unique_ptr<RuntimeData> m_state;
+  GLFWwindow* window_ = nullptr;
 
-  GLFWwindow* m_window = nullptr;
+  std::unique_ptr<ShaderProgram> shader_program_ = nullptr;
+  std::unique_ptr<RenderList> render_list_ = nullptr;
 };

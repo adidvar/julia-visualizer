@@ -2,6 +2,5 @@
 
 int main()
 {
-  Window window;
-  return window.loop();
+  return Window().loop();
 }

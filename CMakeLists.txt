@@ -19,10 +19,9 @@ include(cmake/variables.cmake)
 add_library(
     julia-visualizer_lib
 
-    source/shader.cpp
+    source/wrappers/shader.cpp
+    source/wrappers/renderlist.cpp
     source/window.cpp
-    source/renderer.cpp
-    source/runtimedata.cpp
 )
 
 
@@ -49,10 +48,7 @@ target_link_libraries(julia-visualizer_lib
 
 # ---- Declare executable ----
 
-add_executable(julia-visualizer_exe source/main.cpp
-  source/window.hpp source/window.cpp
-  source/renderer.hpp source/renderer.cpp
-  source/runtimedata.hpp source/runtimedata.cpp)
+add_executable(julia-visualizer_exe source/main.cpp)
 add_executable(julia-visualizer::exe ALIAS julia-visualizer_exe)
 
 set_property(TARGET julia-visualizer_exe PROPERTY OUTPUT_NAME julia-visualizer)
