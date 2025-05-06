@@ -2,6 +2,7 @@
 
 #include "application.hpp"
 
+#include <GLFW/glfw3.h>
 #include <glm/detail/qualifier.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/ext/vector_float3.hpp>
@@ -63,11 +64,10 @@ void Application::renderGUI()
                 1000.0f / imgui_io.Framerate,
                 imgui_io.Framerate);
 
-    ImGui::SliderFloat("Fractal X", &start_point_x_, -1.0F, 1.0F);
-    ImGui::SliderFloat("Fractal Y", &start_point_y_, -1.0F, 1.0F);
+    ImGui::SliderFloat2("Fractal", &start_point_x_, -0.3F, 0.3F);
 
-    ImGui::SliderFloat("Window X", &window_start_x_, -1.0F, 1.0F);
-    ImGui::SliderFloat("Window Y", &window_start_y_, -1.0F, 1.0F);
+    ImGui::SliderFloat2("Window", &window_start_x_, -1.0F, 1.0F);
+
     ImGui::SliderFloat("Window Scale", &window_scale_, 0, 10.0F);
 
     ImGui::End();
@@ -98,4 +98,13 @@ void Application::renderBackground()
   render_list_->render();
 
   shader_program_->deactivate();
+}
+
+void Application::processsInput()
+{
+  ImGuiIO& imgui_io = ImGui::GetIO();
+
+  if (!imgui_io.WantCaptureMouse) {
+    // glfwGetCursorPos(, double *xpos, double *ypos)
+  }
 }

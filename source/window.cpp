@@ -3,6 +3,7 @@
 
 #include "window.hpp"
 
+#include <GLFW/glfw3.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
@@ -11,10 +12,38 @@
 constexpr unsigned kWindowWidth = 1280;
 constexpr unsigned kWindowHeight = 720;
 
-static void errorEvent(int error, const char* description)
+namespace
 {
-  std::cerr << "glfw error: " << description;
+
+void glfwHandleError(int error, const char* description)
+{
+  std::cerr << "GLFW::ERROR::" << error << "\n" << description;
 }
+
+void glfwHandleMousePosition(GLFWwindow* window,
+                             double cursor_x,
+                             double cursor_y)
+{
+  ImGui_ImplGlfw_CursorPosCallback(window, cursor_x, cursor_y);
+}
+
+void glfwHandleMouseButton(GLFWwindow* window, int button, int action, int mods)
+{
+  ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
+}
+
+void glfwHandleMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
+{
+  ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
+}
+
+void glfwHandleKeyboardKey(
+    GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+  ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
+}
+
+}  // namespace
 
 Window::Window()
 {
@@ -23,7 +52,7 @@ Window::Window()
     std::cerr << "glfw init error";
     exit(-1);
   }
-  glfwSetErrorCallback(errorEvent);
+  glfwSetErrorCallback(glfwHandleError);
 
   // OPENGL context settings1
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -56,8 +85,15 @@ Window::Window()
 
   ImGui::StyleColorsDark();
 
+  // init imgui backend
   ImGui_ImplGlfw_InitForOpenGL(window_, /*install_callbacks=*/true);
   ImGui_ImplOpenGL3_Init("#version 150");
+
+  // override callbacks I need
+  glfwSetCursorPosCallback(window_, glfwHandleMousePosition);
+  glfwSetMouseButtonCallback(window_, glfwHandleMouseButton);
+  glfwSetScrollCallback(window_, glfwHandleMouseWheel);
+  glfwSetKeyCallback(window_, glfwHandleKeyboardKey);
 }
 
 Window::~Window()

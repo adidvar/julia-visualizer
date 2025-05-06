@@ -11,7 +11,12 @@ class Window
 {
 public:
   Window();
-  ~Window();
+  virtual ~Window();
+
+  virtual void handleMousePosition() = 0;
+  virtual void handleMouseButton() = 0;
+  virtual void handleMouseWheel() = 0;
+  virtual void handleKeyboardKey() = 0;
 
 protected:
   GLFWwindow* window_ = nullptr;

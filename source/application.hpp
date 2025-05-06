@@ -17,6 +17,16 @@ public:
   void renderGUI();
   void renderBackground();
 
+  void processsInput();
+
+  void handleMousePosition() override {}
+
+  void handleMouseButton() override {}
+
+  void handleMouseWheel() override {}
+
+  void handleKeyboardKey() override {}
+
 private:
   std::unique_ptr<RenderList> render_list_ = nullptr;
   std::unique_ptr<ShaderProgram> shader_program_ = nullptr;
