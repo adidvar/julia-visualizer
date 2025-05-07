@@ -50,6 +50,7 @@ int Application::run()
     // swap
     glfwSwapBuffers(window_);
     glfwPollEvents();
+    processsInput();
   }
 
   return 0;
@@ -86,8 +87,8 @@ void Application::renderBackground()
   shader_program_->activate();
 
   auto transform = glm::mat4(1.0F);
-  transform =
-      glm::translate(transform, glm::vec3(window_start_x_, window_start_y_, 0));
+  transform = glm::translate(transform,
+                             glm::vec3(window_start_x_, -window_start_y_, 0));
 
   float ratio = sqrtf(window_ratio_);
 
@@ -107,7 +108,6 @@ void Application::processsInput()
 {
   ImGuiIO& imgui_io = ImGui::GetIO();
 
-  if (!imgui_io.WantCaptureMouse) {
-    // glfwGetCursorPos(, double *xpos, double *ypos)
-  }
+  enableCaptureMouse(!imgui_io.WantCaptureMouse);
+  enableCaptureKeyboard(!imgui_io.WantCaptureKeyboard);
 }

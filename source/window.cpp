@@ -26,24 +26,33 @@ void glfwHandleMousePosition(GLFWwindow* window,
 {
   ImGui_ImplGlfw_CursorPosCallback(window, cursor_x, cursor_y);
 
-  Window::getHandle(glfwGetWindowUserPointer(window))
-      ->handleMousePosition(cursor_x, cursor_y);
+  auto* context = Window::getHandle(glfwGetWindowUserPointer(window));
+
+  if (context->isMouseCaptureEnabled()) {
+    context->handleMousePosition(cursor_x, cursor_y);
+  }
 }
 
 void glfwHandleMouseButton(GLFWwindow* window, int button, int action, int mods)
 {
   ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 
-  Window::getHandle(glfwGetWindowUserPointer(window))
-      ->handleMouseButton(button, action, mods);
+  auto* context = Window::getHandle(glfwGetWindowUserPointer(window));
+
+  if (context->isMouseCaptureEnabled()) {
+    context->handleMouseButton(button, action, mods);
+  }
 }
 
 void glfwHandleMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
 {
   ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
 
-  Window::getHandle(glfwGetWindowUserPointer(window))
-      ->handleMouseWheel(xoffset, yoffset);
+  auto* context = Window::getHandle(glfwGetWindowUserPointer(window));
+
+  if (context->isMouseCaptureEnabled()) {
+    context->handleMouseWheel(xoffset, yoffset);
+  }
 }
 
 void glfwHandleKeyboardKey(
@@ -51,8 +60,11 @@ void glfwHandleKeyboardKey(
 {
   ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mods);
 
-  Window::getHandle(glfwGetWindowUserPointer(window))
-      ->handleKeyboardKey(key, scancode, action, mods);
+  auto* context = Window::getHandle(glfwGetWindowUserPointer(window));
+
+  if (context->isKeyboardCaptureEnabled()) {
+    context->handleKeyboardKey(key, scancode, action, mods);
+  }
 }
 
 void glfwHandleFrameBufferResize(GLFWwindow* window, int width, int height)

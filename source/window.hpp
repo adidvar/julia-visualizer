@@ -21,6 +21,17 @@ public:
                                  int action,
                                  int mods) = 0;
 
+  void enableCaptureMouse(bool enabled) { enabled_mouse_capture_ = enabled; }
+
+  void enableCaptureKeyboard(bool enabled)
+  {
+    enabled_keyboard_capture_ = enabled;
+  }
+
+  bool isMouseCaptureEnabled() const { return enabled_mouse_capture_; }
+
+  bool isKeyboardCaptureEnabled() const { return enabled_keyboard_capture_; }
+
   static Window* getHandle(void*);
 
   void updateWindowRatio(int width, int height);
@@ -29,4 +40,7 @@ protected:
   GLFWwindow* window_ = nullptr;
 
   float window_ratio_ = 1;
+
+  bool enabled_mouse_capture_ = true;
+  bool enabled_keyboard_capture_ = true;
 };
