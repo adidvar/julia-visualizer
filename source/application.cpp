@@ -88,8 +88,11 @@ void Application::renderBackground()
   auto transform = glm::mat4(1.0F);
   transform =
       glm::translate(transform, glm::vec3(window_start_x_, window_start_y_, 0));
+
+  float ratio = sqrtf(window_ratio_);
+
   transform = glm::scale(
-      transform, glm::vec3(window_scale_, window_scale_, window_scale_));
+      transform, glm::vec3(window_scale_ * ratio, window_scale_ / ratio, 1));
 
   glUniformMatrix4fv(
       uniform_transform_matrix_, 1, 0, glm::value_ptr(transform));

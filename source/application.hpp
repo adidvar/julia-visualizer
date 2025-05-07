@@ -19,13 +19,15 @@ public:
 
   void processsInput();
 
-  void handleMousePosition() override {}
+  void handleMousePosition(double cursor_x, double cursor_y) override {}
 
-  void handleMouseButton() override {}
+  void handleMouseButton(int button, int action, int mods) override {}
 
-  void handleMouseWheel() override {}
+  void handleMouseWheel(double wheel_x, double wheel_y) override {}
 
-  void handleKeyboardKey() override {}
+  void handleKeyboardKey(int key, int scancode, int action, int mods) override
+  {
+  }
 
 private:
   std::unique_ptr<RenderList> render_list_ = nullptr;
