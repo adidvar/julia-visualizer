@@ -47,6 +47,12 @@ public:
 
   void handleMouseWheel(double wheel_x, double wheel_y) override
   {
+    if (wheel_y < 0) {
+      window_scale_ *= 1.1;
+    }
+    if (wheel_y > 0) {
+      window_scale_ /= 1.1;
+    }
     // std::cout << "WHEEL::" << wheel_x << ":::" << wheel_y << std::endl;
   }
 
