@@ -23,8 +23,8 @@ Application::Application()
       glGetUniformLocation(shader_program_->getUid(), "uniform_start_point");
   uniform_transform_matrix_ = glGetUniformLocation(shader_program_->getUid(),
                                                    "uniform_transform_matrix");
-  uniform_iterations_ = glGetUniformLocation(shader_program_->getUid(),
-                                                   "uniform_iterations");
+  uniform_iterations_ =
+      glGetUniformLocation(shader_program_->getUid(), "uniform_iterations");
 
   shader_program_->activate();
 }
