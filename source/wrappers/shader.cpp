@@ -27,30 +27,31 @@ const char* ShaderProgram::k_fragment_shader_text_ = R"(
     in vec2 Coord;
 
     uniform vec2 uniform_start_point;
+    uniform int uniform_iterations;
 
     void main()
     {
         vec2 c = uniform_start_point;
         vec2 p = vec2(Coord.xy);
 
-        for(int i = 0 ; i <6 ; i++){
+        for(int i = 0 ; i < uniform_iterations ; i++){
             p = vec2(p.x*p.x -p.y*p.y, 2.0*p.x*p.y);
             p+=c;
         }
         vec2 p1 = p;
 
-        for(int i = 0 ; i <6 ; i++){
+        for(int i = 0 ; i <uniform_iterations ; i++){
             p = vec2(p.x*p.x -p.y*p.y, 2.0*p.x*p.y);
             p+=c;
         }
 	vec2 p2 = p;
 
-        for(int i = 0 ; i <6 ; i++){
+        for(int i = 0 ; i <uniform_iterations ; i++){
             p = vec2(p.x*p.x -p.y*p.y, 2.0*p.x*p.y);
             p+=c;
         }
 	vec2 p3 = p;
-        for(int i = 0 ; i <6 ; i++){
+        for(int i = 0 ; i <uniform_iterations ; i++){
             p = vec2(p.x*p.x -p.y*p.y, 2.0*p.x*p.y);
             p+=c;
         }

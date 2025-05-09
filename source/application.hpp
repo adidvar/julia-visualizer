@@ -33,6 +33,10 @@ private:
   float start_point_x_ = 0;
   float start_point_y_ = 0;
 
+  GLint uniform_iterations_ = 0;
+
+  int iterations_ = 50;
+
   GLint uniform_transform_matrix_ = 0;
 
   float window_start_x_ = 0;

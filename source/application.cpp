@@ -23,6 +23,8 @@ Application::Application()
       glGetUniformLocation(shader_program_->getUid(), "uniform_start_point");
   uniform_transform_matrix_ = glGetUniformLocation(shader_program_->getUid(),
                                                    "uniform_transform_matrix");
+  uniform_iterations_ = glGetUniformLocation(shader_program_->getUid(),
+                                                   "uniform_iterations");
 
   shader_program_->activate();
 }
@@ -46,9 +48,7 @@ void Application::renderGUI()
 
     ImGui::SliderFloat2("Fractal", &start_point_x_, -0.3F, 0.3F);
 
-    ImGui::SliderFloat2("Window", &window_start_x_, -1.0F, 1.0F);
-
-    ImGui::SliderFloat("Window Scale", &window_scale_, 0, 10.0F);
+    ImGui::SliderInt("Iterations", &iterations_, 1, 300);
 
     ImGui::End();
 
@@ -77,6 +77,7 @@ void Application::renderBackground() const
   glUniformMatrix4fv(
       uniform_transform_matrix_, 1, 0, glm::value_ptr(transform));
   glUniform2f(uniform_start_point_, start_point_x_, start_point_y_);
+  glUniform1i(uniform_iterations_, iterations_);
 
   render_list_->render();
 }
