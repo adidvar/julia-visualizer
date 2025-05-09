@@ -9,9 +9,6 @@
 
 #include "imgui.h"
 
-constexpr unsigned kWindowWidth = 1280;
-constexpr unsigned kWindowHeight = 720;
-
 namespace
 {
 
@@ -44,14 +41,14 @@ void glfwHandleMouseButton(GLFWwindow* window, int button, int action, int mods)
   }
 }
 
-void glfwHandleMouseWheel(GLFWwindow* window, double xoffset, double yoffset)
+void glfwHandleMouseWheel(GLFWwindow* window, double x_offset, double y_offset)
 {
-  ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
+  ImGui_ImplGlfw_ScrollCallback(window, x_offset, y_offset);
 
   auto* context = Window::getHandle(glfwGetWindowUserPointer(window));
 
   if (context->isMouseCaptureEnabled()) {
-    context->handleMouseWheel(xoffset, yoffset);
+    context->handleMouseWheel(x_offset, y_offset);
   }
 }
 
@@ -85,6 +82,8 @@ Window* Window::getHandle(void* p)
 void Window::updateWindowRatio(int width, int height)
 {
   window_ratio_ = static_cast<float>(width) / static_cast<float>(height);
+  window_width_ = width;
+  window_height_ = height;
 }
 
 Window::Window()
@@ -102,13 +101,13 @@ Window::Window()
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   // WINDOW init
-  window_ =
-      glfwCreateWindow(kWindowWidth, kWindowHeight, "Julia", nullptr, nullptr);
+  window_ = glfwCreateWindow(
+      window_width_, window_height_, "Julia", nullptr, nullptr);
   if (window_ == nullptr) {
     std::cerr << "glfw window init error";
     exit(-1);
   }
-  updateWindowRatio(kWindowWidth, kWindowHeight);
+  updateWindowRatio(window_width_, window_height_);
 
   glfwSetWindowUserPointer(window_, this);
   glfwMakeContextCurrent(window_);
@@ -132,7 +131,7 @@ Window::Window()
   ImGui_ImplGlfw_InitForOpenGL(window_, /*install_callbacks=*/true);
   ImGui_ImplOpenGL3_Init("#version 150");
 
-  // write window pointer
+  // write a window pointer
   glfwSetWindowUserPointer(window_, this);
 
   // override callbacks I need
@@ -152,4 +151,35 @@ Window::~Window()
 
   glfwDestroyWindow(window_);
   glfwTerminate();
+}
+
+int Window::run()
+{
+  while (glfwWindowShouldClose(window_) == 0) {
+    // imgui update
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    // clear
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    render();
+
+    // render
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    // swap
+    glfwSwapBuffers(window_);
+    glfwPollEvents();
+
+    const ImGuiIO& imgui_io = ImGui::GetIO();
+
+    enableCaptureMouse(!imgui_io.WantCaptureMouse);
+    enableCaptureKeyboard(!imgui_io.WantCaptureKeyboard);
+  }
+
+  return 0;
 }

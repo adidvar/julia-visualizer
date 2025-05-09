@@ -9,8 +9,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/mat4x2.hpp>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 
 #include "glad/gl.h"
 #include "imgui.h"
@@ -25,44 +23,25 @@ Application::Application()
       glGetUniformLocation(shader_program_->getUid(), "uniform_start_point");
   uniform_transform_matrix_ = glGetUniformLocation(shader_program_->getUid(),
                                                    "uniform_transform_matrix");
+
+  shader_program_->activate();
 }
 
-Application::~Application() {}
+Application::~Application() = default;
 
-int Application::run()
+void Application::render()
 {
-  while (glfwWindowShouldClose(window_) == 0) {
-    // imgui update
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-    renderGUI();
-    ImGui::Render();
-
-    // clear
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // render
-    renderBackground();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    // swap
-    glfwSwapBuffers(window_);
-    glfwPollEvents();
-    processsInput();
-  }
-
-  return 0;
+  renderGUI();
+  renderBackground();
 }
 
 void Application::renderGUI()
 {
-  ImGuiIO& imgui_io = ImGui::GetIO();
   {
+    const ImGuiIO& imgui_io = ImGui::GetIO();
     ImGui::Begin("Menu");
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
-                1000.0f / imgui_io.Framerate,
+                1000.0F / imgui_io.Framerate,
                 imgui_io.Framerate);
 
     ImGui::SliderFloat2("Fractal", &start_point_x_, -0.3F, 0.3F);
@@ -82,32 +61,54 @@ void Application::renderGUI()
   }
 }
 
-void Application::renderBackground()
+void Application::renderBackground() const
 {
-  shader_program_->activate();
-
   auto transform = glm::mat4(1.0F);
-  transform = glm::translate(transform,
-                             glm::vec3(window_start_x_, -window_start_y_, 0));
 
   float ratio = sqrtf(window_ratio_);
 
-  transform = glm::scale(
-      transform, glm::vec3(window_scale_ * ratio, window_scale_ / ratio, 1));
+  transform = glm::scale(transform, glm::vec3(ratio, 1.0 / ratio, 1));
+
+  transform = glm::translate(
+      transform, glm::vec3(2 * window_start_x_, -2 * window_start_y_, 0));
+
+  transform = glm::scale(transform, glm::vec3(window_scale_, window_scale_, 1));
 
   glUniformMatrix4fv(
       uniform_transform_matrix_, 1, 0, glm::value_ptr(transform));
   glUniform2f(uniform_start_point_, start_point_x_, start_point_y_);
 
   render_list_->render();
-
-  shader_program_->deactivate();
 }
 
-void Application::processsInput()
+void Application::handleMousePosition(double cursor_x, double cursor_y)
 {
-  ImGuiIO& imgui_io = ImGui::GetIO();
+  if (movement_mode_) {
+    window_start_x_ += (cursor_x_ - cursor_x) / window_width_ * window_scale_;
+    window_start_y_ += (cursor_y_ - cursor_y) / window_height_ * window_scale_;
 
-  enableCaptureMouse(!imgui_io.WantCaptureMouse);
-  enableCaptureKeyboard(!imgui_io.WantCaptureKeyboard);
+    cursor_x_ = cursor_x;
+    cursor_y_ = cursor_y;
+  }
+}
+
+void Application::handleMouseButton(int button, int action, int /*mods*/)
+{
+  if (button == GLFW_MOUSE_BUTTON_LEFT || button == GLFW_MOUSE_BUTTON_RIGHT) {
+    movement_mode_ = (action == GLFW_PRESS);
+    glfwGetCursorPos(window_, &cursor_x_, &cursor_y_);
+  }
+}
+
+constexpr float kMouseWheelSensitivity = 1.1F;
+
+void Application::handleMouseWheel(double /*wheel_x*/, double wheel_y)
+{
+  const float scale_factor =
+      (wheel_y < 0) ? kMouseWheelSensitivity : 1.0F / kMouseWheelSensitivity;
+  window_scale_ *= scale_factor;
+}
+
+void Application::handleKeyboardKey(int key, int scancode, int action, int mods)
+{
 }

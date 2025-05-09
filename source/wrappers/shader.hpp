@@ -17,34 +17,32 @@ public:
     int compile_status;
 
     // Compile vertex shader
-    unsigned int vertex_shader;
-    vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+    unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex_shader, 1, &k_vertex_shader_text_, nullptr);
     glCompileShader(vertex_shader);
     glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &compile_status);
 
     if (!compile_status) {
       glGetShaderInfoLog(vertex_shader, 512, nullptr, error_log);
-      appendError("\nERROR::SHADER::VERTEX::COMPILATION_FAILED\n");
+      appendError("\nERROR::SHADER::VERTEX::COMPILATION::FAILED\n");
       appendError(error_log);
     }
 
     // Compile fragment shader
-    unsigned int fragment_shader;
-    fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+    unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment_shader, 1, &k_fragment_shader_text_, nullptr);
     glCompileShader(fragment_shader);
     glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &compile_status);
 
     if (!compile_status) {
       glGetShaderInfoLog(fragment_shader, 512, nullptr, error_log);
-      appendError("\nERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n");
+      appendError("\nERROR::SHADER::FRAGMENT::COMPILATION::FAILED\n");
       appendError(error_log);
     }
 
-    // Skip link if compile failder
+    // Skip link if compile failer
     if (!valid()) {
-      appendError("\nERROR::SHADER::LINKSKIPPED\n");
+      appendError("\nERROR::SHADER::LINK::SKIPPED\n");
       return;
     }
 
@@ -57,7 +55,7 @@ public:
 
     if (!compile_status) {
       glGetProgramInfoLog(program_, 512, nullptr, error_log);
-      appendError("\nERROR::SHADER::LINKERROR\n");
+      appendError("\nERROR::SHADER::LINK::ERROR\n");
       appendError(error_log);
     }
 
@@ -86,11 +84,9 @@ public:
 
   void appendError(const std::string& part) { error_ += part; }
 
-  bool valid() { return error_.empty(); }
+  bool valid() const { return error_.empty(); }
 
   void activate() const { glUseProgram(program_); }
-
-  void deactivate() const { glUseProgram(0); }
 
   std::string getError() { return error_; }
 
