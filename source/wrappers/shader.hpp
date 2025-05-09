@@ -40,7 +40,7 @@ public:
       appendError(error_log);
     }
 
-    // Skip link if compile failer
+    // Skip link if compile failure
     if (!valid()) {
       appendError("\nERROR::SHADER::LINK::SKIPPED\n");
       return;
