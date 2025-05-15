@@ -38,38 +38,12 @@ const char* ShaderProgram::k_fragment_shader_text_ = R"(
             p = vec2(p.x*p.x -p.y*p.y, 2.0*p.x*p.y);
             p+=c;
         }
-        vec2 p1 = p;
 
-        for(int i = 0 ; i <uniform_iterations ; i++){
-            p = vec2(p.x*p.x -p.y*p.y, 2.0*p.x*p.y);
-            p+=c;
-        }
-	vec2 p2 = p;
+        float value = distance(p,vec2(0,0));
 
-        for(int i = 0 ; i <uniform_iterations ; i++){
-            p = vec2(p.x*p.x -p.y*p.y, 2.0*p.x*p.y);
-            p+=c;
-        }
-	vec2 p3 = p;
-        for(int i = 0 ; i <uniform_iterations ; i++){
-            p = vec2(p.x*p.x -p.y*p.y, 2.0*p.x*p.y);
-            p+=c;
-        }
-	vec2 p4 = p;
+        value = clamp(value,0.0,1.0);
 
-        //float value = ((p.x*p.x + p.y*p.y) <= 1) ? 0 : log(p.x*p.x + p.y*p.y);
-        float value1 = distance(p1,vec2(0,0));
-        float value2 = distance(p2,vec2(0,0));
-        float value3 = distance(p3,vec2(0,0));
-        float value4 = distance(p4,vec2(0,0));
-
-        value1 = clamp(value1,0.0,1.0);
-        value2 = clamp(value2,0.0,1.0);
-        value3 = clamp(value3,0.0,1.0);
-        value4 = clamp(value4,0.0,1.0);
-
-
-        FragColor = vec4(value1+value2,value2*value3,value4,1.0);
+        FragColor = vec4(value,value,value,1.0);
     }
 
 )";

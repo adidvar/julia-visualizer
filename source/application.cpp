@@ -46,7 +46,7 @@ void Application::renderGUI()
                 1000.0F / imgui_io.Framerate,
                 imgui_io.Framerate);
 
-    ImGui::SliderFloat2("Fractal", &start_point_x_, -0.3F, 0.3F);
+    ImGui::SliderFloat2("Fractal", &start_point_x_, -0.5F, 0.5F);
 
     ImGui::SliderInt("Iterations", &iterations_, 1, 300);
 
