@@ -4,7 +4,7 @@ include(cmake/prelude.cmake)
 
 project(
     julia-visualizer
-    VERSION 0.1.0
+    VERSION 0.2.0
     DESCRIPTION "This is a C++ project that renders Julia Set using OpenGL shaders"
     HOMEPAGE_URL "https://github.com/adidvar/julia-visualizer"
     LANGUAGES CXX C
