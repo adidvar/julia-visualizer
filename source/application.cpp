@@ -21,10 +21,20 @@ Application::Application()
 {
   uniform_start_point_ =
       glGetUniformLocation(shader_program_->getUid(), "uniform_start_point");
+
   uniform_transform_matrix_ = glGetUniformLocation(shader_program_->getUid(),
                                                    "uniform_transform_matrix");
   uniform_iterations_ =
       glGetUniformLocation(shader_program_->getUid(), "uniform_iterations");
+
+  uniform_radius_ =
+      glGetUniformLocation(shader_program_->getUid(), "uniform_radius");
+
+  uniform_front_color_ =
+      glGetUniformLocation(shader_program_->getUid(), "uniform_front_color");
+
+  uniform_back_color_ =
+      glGetUniformLocation(shader_program_->getUid(), "uniform_back_color");
 
   shader_program_->activate();
 }
@@ -48,7 +58,13 @@ void Application::renderGUI()
 
     ImGui::SliderFloat2("Fractal", &start_point_x_, -0.5F, 0.5F);
 
-    ImGui::SliderInt("Iterations", &iterations_, 1, 300);
+    ImGui::SliderInt("Iterations", &iterations_, 1, 400);
+
+    ImGui::SliderFloat("Radius", &radius_, 1, 1000);
+
+    ImGui::ColorEdit3("Background", glm::value_ptr(back_color_));
+
+    ImGui::ColorEdit3("Front", glm::value_ptr(front_color_));
 
     ImGui::End();
 
@@ -78,6 +94,9 @@ void Application::renderBackground() const
       uniform_transform_matrix_, 1, 0, glm::value_ptr(transform));
   glUniform2f(uniform_start_point_, start_point_x_, start_point_y_);
   glUniform1i(uniform_iterations_, iterations_);
+  glUniform1f(uniform_radius_, radius_);
+  glUniform3fv(uniform_front_color_,1, glm::value_ptr(front_color_));
+  glUniform3fv(uniform_back_color_,1, glm::value_ptr(back_color_));
 
   render_list_->render();
 }

@@ -4,6 +4,8 @@
 
 #include <glad/gl.h>
 
+#include <glm/vec3.hpp>
+
 #include "window.hpp"
 #include "wrappers/renderlist.hpp"
 #include "wrappers/shader.hpp"
@@ -42,6 +44,18 @@ private:
   float window_start_x_ = 0;
   float window_start_y_ = 0;
   float window_scale_ = 1;
+
+  GLint uniform_radius_ = 0;
+
+  float radius_ = 100;
+
+  GLint uniform_back_color_ = 0;
+
+  glm::vec3 back_color_ = glm::vec3(0,0,0);
+
+  GLint uniform_front_color_ = 0;
+
+  glm::vec3 front_color_ = glm::vec3(0,0,0);
 
   bool movement_mode_ = false;
 
