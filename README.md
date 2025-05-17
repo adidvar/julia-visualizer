@@ -1,4 +1,7 @@
-# julia-visualizer
+# Julia Visualizer
+
+![GitHub license](https://img.shields.io/github/license/adidvar/post-machine?style=flat)
+[![CI](https://github.com/adidvar/julia-visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/adidvar/julia-visualizer/actions)
 
 **julia-visualizer** is a graphical application designed to visualize Julia sets in real-time using OpenGL. It leverages OpenGL 3.3 for rendering and provides an interactive GUI powered by **Dear ImGui**, along with **GLFW** for window and input management, and **GLAD** for loading OpenGL functions. The project uses **Conan** for dependency management, ensuring a reproducible and manageable build environment.
 
