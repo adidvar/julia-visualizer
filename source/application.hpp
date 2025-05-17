@@ -51,11 +51,11 @@ private:
 
   GLint uniform_back_color_ = 0;
 
-  glm::vec3 back_color_ = glm::vec3(0,0,0);
+  glm::vec3 back_color_ = glm::vec3(0, 0, 0);
 
   GLint uniform_front_color_ = 0;
 
-  glm::vec3 front_color_ = glm::vec3(0,0,0);
+  glm::vec3 front_color_ = glm::vec3(0, 0, 0);
 
   bool movement_mode_ = false;
 

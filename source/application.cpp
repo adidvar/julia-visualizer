@@ -95,8 +95,8 @@ void Application::renderBackground() const
   glUniform2f(uniform_start_point_, start_point_x_, start_point_y_);
   glUniform1i(uniform_iterations_, iterations_);
   glUniform1f(uniform_radius_, radius_);
-  glUniform3fv(uniform_front_color_,1, glm::value_ptr(front_color_));
-  glUniform3fv(uniform_back_color_,1, glm::value_ptr(back_color_));
+  glUniform3fv(uniform_front_color_, 1, glm::value_ptr(front_color_));
+  glUniform3fv(uniform_back_color_, 1, glm::value_ptr(back_color_));
 
   render_list_->render();
 }
