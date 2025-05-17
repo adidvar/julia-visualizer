@@ -2,7 +2,7 @@
 
 const char* ShaderProgram::k_vertex_shader_text_ = R"(
 
-    #version 420 core
+    #version 330 core
     layout (location = 0) in vec3 aPos;
 
     out vec2 Coord;
@@ -20,7 +20,7 @@ const char* ShaderProgram::k_vertex_shader_text_ = R"(
 
 const char* ShaderProgram::k_fragment_shader_text_ = R"(
 
-    #version 420 core
+    #version 330 core
 
    out vec4 FragColor;
 

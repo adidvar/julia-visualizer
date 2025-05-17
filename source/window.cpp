@@ -129,7 +129,7 @@ Window::Window()
 
   // init imgui backend
   ImGui_ImplGlfw_InitForOpenGL(window_, /*install_callbacks=*/true);
-  ImGui_ImplOpenGL3_Init("#version 150");
+  ImGui_ImplOpenGL3_Init("#version 330");
 
   // write a window pointer
   glfwSetWindowUserPointer(window_, this);
@@ -160,10 +160,6 @@ int Window::run()
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-
-    // clear
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
 
     render();
 
